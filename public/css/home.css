@@ -1,42 +1,253 @@
+/* Fuente moderna y limpia */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+/* ======= ESTILOS GENERALES ======= */
 body {
-    font-family: Arial, sans-serif;
-    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    background-color: #f8f9fa;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
+    color: #333;
+    text-align: center;
 }
 
+/* ======= CONTENEDOR PRINCIPAL ======= */
+.container {
+    max-width: 90%;
+    margin: 40px auto;
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* ======= ENCABEZADOS ======= */
 h1 {
-    background-color: #333;
+    text-align: center;
+    background-color: #174f51;
     color: white;
+    padding: 20px;
+    font-size: 26px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+h2 {
+    text-align: center;
+    font-size: 22px;
+    margin-top: 20px;
+    color: #333;
+}
+
+/* ======= FORMULARIOS ======= */
+.form-qr {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px; /* Aumenta el espacio entre los elementos del formulario */
+    max-width: 400px;
+    margin: 20px auto;
+}
+
+.form-qr input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.form-qr input:focus {
+    border-color: #007bff;
+    box-shadow: 0px 0px 5px rgba(0, 123, 255, 0.3);
+}
+
+.input-newurl {
+    width: 90%;
     padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.input-newurl:focus {
+    border-color: #007bff;
+    box-shadow: 0px 0px 5px rgba(0, 123, 255, 0.3);
+}
+
+/* ======= BOTONES ======= */
+
+.btn-logout {
+    background: #dc3545; /* Rojo */
+    color: white;
+    border: none;
+    padding: 12px 18px;
+    font-size: 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    box-shadow: 2px 2px 10px rgba(220, 53, 69, 0.2);
+    margin: 5px; /* Espacio alrededor del botón */
+    display: inline-block; /* Para que no ocupe todo el ancho */
+    text-decoration: none;
+}
+
+.btn-logout:hover {
+    background: #c82333; /* Rojo más oscuro al pasar el mouse */
+    box-shadow: 2px 2px 15px rgba(220, 53, 69, 0.4);
+    text-decoration: none;
+    color: white;
+}
+
+.btn-track {
+    background: #28a745; /* Verde */
+    color: white;
+    border: none;
+    padding: 12px 18px;
+    font-size: 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    box-shadow: 2px 2px 10px rgba(40, 167, 69, 0.2);
+    margin: 5px; /* Espacio alrededor del botón */
+    display: inline-block; /* Para que no ocupe todo el ancho */
+    text-decoration: none;
+}
+
+.btn-track:hover {
+    background: #218838; /* Verde más oscuro al pasar el mouse */
+    box-shadow: 2px 2px 15px rgba(40, 167, 69, 0.4);
+    text-decoration: none;
+    color: white;
+}
+
+.btn-generate {
+    background: #007bff; /* Azul */
+    color: white; /* Color del texto */
+    border: none;
+    padding: 12px 18px;
+    font-size: 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    box-shadow: 2px 2px 10px rgba(0, 123, 255, 0.2);
+    margin: 5px; /* Espacio alrededor del botón */
+    display: inline-block; /* Para que no ocupe todo el ancho */
+    text-decoration: none; /* Elimina el subrayado */
+    width: 90%;
+}
+
+.btn-generate:hover {
+    background: #0056b3; /* Azul más oscuro al pasar el mouse */
+    box-shadow: 2px 2px 15px rgba(0, 123, 255, 0.4);
+    text-decoration: none; /* Asegura que no haya subrayado en hover */
+    color: white; /* Mantén el color del texto en blanco */
+}
+
+
+.qr-item button {
+    width: 100%; /* Botones ocupen todo el ancho */
+    margin: 5px 0; /* Espacio entre botones */
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+.btn-update {
+    background: #28a745;
+    color: white;
+}
+
+.btn-update:hover {
+    background: #218838;
+}
+
+.btn-delete {
+    background: #dc3545;
+    color: white;
+}
+
+.btn-delete:hover {
+    background: #c82333;
+}
+
+.btn-download {
+    background: #007bff;
+    color: white;
+}
+
+.btn-download:hover {
+    background: #0056b3;
+}
+
+/* ======= TARJETAS QR ======= */
+.qr-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px; /* Espacio entre tarjetas */
+    padding: 20px;
+    max-width: 90%;
+    margin: 0 auto;
+    justify-content: center;
 }
 
 .qr-item {
-    display: inline-block;
     background: white;
-    padding: 15px;
-    margin: 10px;
+    padding: 20px;
     border-radius: 10px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 90%;
+    margin: 0 auto;
 }
 
-.qr-item img {
-    max-width: 150px;
-    display: block;
-    margin: 10px auto;
+.qr-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
 }
 
-button {
-    background: #007bff;
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    margin: 5px;
-    cursor: pointer;
-    border-radius: 5px;
+/* ======= ENLACES ======= */
+a {
+    color: #007bff;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    display: inline-block;
+    margin: 10px 0;
+    transition: color 0.3s ease;
 }
 
-button:hover {
-    background: #0056b3;
+a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+/* ======= MEDIA QUERIES PARA PANTALLAS PEQUEÑAS ======= */
+@media (max-width: 600px) {
+    .qr-container {
+        grid-template-columns: repeat(1, 1fr); /* Una columna en móviles */
+    }
+
+    .qr-item {
+        max-width: 100%; /* Ocupar todo el ancho disponible */
+    }
+
+    .qr-item input[type="text"] {
+        font-size: 16px; /* Tamaño de fuente más grande en móviles */
+    }
+
+    .qr-item button {
+        font-size: 16px; /* Tamaño de fuente más grande en móviles */
+    }
 }

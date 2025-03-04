@@ -2,50 +2,46 @@
     <link rel="stylesheet" href="/css/home.css">
 {{/section}}
 
-<h1>Página de Inicio</h1>
+<div class="container">
 
-<section>
-    <a href="/auth/logout">Cerrar sesión</a>
-</section>
-<section>
-    <h2>Generar un nuevo QR</h2>
-    <form id="qrForm">
+    <h1>Dashboard</h1>
+     <a href="/auth/logout" class="btn-logout">Cerrar sesión</a> 
+
+     <h2>Generar un nuevo QR</h2>  
+     <form id="qrForm" class="form-qr">
         <input type="text" id="tagInput" name="tag" placeholder="Nombre del QR" required>
         <input type="text" id="urlInput" name="url" placeholder="Ingrese la URL" required>
-
-        <button type="submit">Generar QR</button>
+        <button type="submit" class="btn-generate">Generar QR</button>
     </form>
-</section>
 
-<section>
     <h2>Lista de Códigos QR</h2>
+
+     <a href="/qr/track" class="btn-track">📊 Ver Seguimiento de Clics</a>
+
+     <div class="qr-container">
+
     {{#each qrs}}
     <div class="qr-item">
-        <h3>{{this.tag}}</h3> <!-- Mostrar el nombre del QR -->
-        <!-- Mostrar el QR -->
-        <!-- Botón para descargar el QR -->
-        <button onclick="descargarQR('{{this._id}}')">Descargar SVG</button>
-        <div id="qr-{{this._id}}">{{{this.qrCode}}}</div>
-
-        <p><strong>URL:</strong> <a href="{{this.url}}" target="_blank">{{this.url}}</a></p>
+        <h3>{{this.tag}}</h3> <!-- Mostrar el nombre del QR -->   
+        <div id="qr-{{this._id}}">{{{this.qrCode}}}</div> <!-- Mostrar el QR -->
+        <p><strong>URL:</strong> <br><a href="{{this.url}}" target="_blank">{{this.url}}</a></p>
         <p><strong>Escaneos:</strong> {{this.scans}}</p>
 
-
-
-        <!-- Formulario para editar la URL -->
-        <input type="text" id="edit-url-{{this._id}}" placeholder="Nueva URL">
-        <button onclick="editarQR('{{this._id}}')">Actualizar</button>
+        <input type="text" id="edit-url-{{this._id}}" placeholder="Nueva URL" class="input-newurl"> <!-- Formulario para editar la URL -->
+        <button onclick="editarQR('{{this._id}}')" class="btn-update">Actualizar</button>
 
         <!-- Botón para eliminar el QR -->
         <form class="delete-form" action="/qr/delete?id={{this._id}}" method="POST">
-            <button type="submit">Eliminar</button>
+            <button type="submit" class="btn-delete">Eliminar</button>
         </form>
+                <!-- Botón para descargar el QR -->
+        <button onclick="descargarQR('{{this._id}}')" class="btn-download">Descargar SVG</button>
     </div>
     {{/each}}
-</section>
-<section>
-    <a href="/qr/track">📊 Ver Seguimiento de Clics</a>
-</section>
+</div>
+   
+
+</div>
 
 <script src="./script.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
