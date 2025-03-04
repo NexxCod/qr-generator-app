@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const urlInput = document.getElementById("urlInput").value.trim();
 
         if (!tagInput || !urlInput) {
-            alert("Por favor, ingresa un nombre y una URL válida.");
+            mostrarToast("⚠️ Ingresa un nombre y una URL válida", "warning");
             return;
         }
 
@@ -22,62 +22,97 @@ document.addEventListener("DOMContentLoaded", () => {
             if (response.ok) {
                 document.getElementById("tagInput").value = "";
                 document.getElementById("urlInput").value = ""; // Limpia el input
-                window.location.href = "/"; // Redirige a la página principal manualmente
+                mostrarToast("✅ QR generado exitosamente", "success");
+                setTimeout(() => window.location.reload(), 1000);
             } else {
-                alert("Error al generar QR. Intenta nuevamente.");
+                mostrarToast("❌ Error al generar QR", "error");
             }
         } catch (error) {
             console.error("❌ Error:", error);
-            alert("Error al enviar la solicitud.");
+            mostrarToast("⚠️ Error al enviar la solicitud", "error");
         }
     });
 });
 
-//borrar
+// Función para mostrar Toasts (notificaciones rápidas)
+function mostrarToast(mensaje, tipo = "info") {
+    const colores = {
+        success: "#28a745",
+        error: "#dc3545",
+        warning: "#ffc107",
+        info: "#007bff"
+    };
+
+    Toastify({
+        text: mensaje,
+        duration: 3000,
+        gravity: "top",
+        position: "right",
+        backgroundColor: colores[tipo] || "#000",
+        stopOnFocus: true,
+    }).showToast();
+}
+
+// Manejo de eliminación de QR con SweetAlert2
 document.querySelectorAll(".delete-form").forEach(form => {
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
-        if (!confirm("¿Seguro que deseas eliminar este QR?")) return;
+
+        const confirmar = await mostrarConfirmacion("¿Seguro que deseas eliminar este QR?");
+        if (!confirmar) return;
 
         const response = await fetch(form.action, { method: "DELETE" });
 
         if (response.ok) {
-            alert("QR eliminado");
-            window.location.reload();
+            mostrarToast("✅ QR eliminado", "success");
+            setTimeout(() => window.location.reload(), 1000);
         } else {
-            alert("Error al eliminar el QR");
+            mostrarToast("❌ Error al eliminar el QR", "error");
         }
     });
 });
 
+// Función para mostrar confirmación con SweetAlert2
+async function mostrarConfirmacion(mensaje) {
+    const resultado = await Swal.fire({
+        title: mensaje,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Sí, eliminar",
+        cancelButtonText: "Cancelar"
+    });
+
+    return resultado.isConfirmed;
+}
+
 function descargarQR(qrId) {
-    // Obtener el contenido del QR desde el div
     const qrDiv = document.getElementById(`qr-${qrId}`);
     if (!qrDiv) {
-        alert("Error: No se encontró el QR.");
+        mostrarToast("⚠️ Error: No se encontró el QR", "warning");
         return;
     }
 
-    // Extraer el código SVG del div
     const svgData = qrDiv.innerHTML;
     const blob = new Blob([svgData], { type: "image/svg+xml" });
-    
-    // Crear un enlace de descarga
+
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
     link.download = `qr_${qrId}.svg`;
 
-    // Simular clic para descargar
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+
+    mostrarToast("📥 QR descargado", "info");
 }
 
 async function editarQR(qrId) {
     const nuevaUrl = document.getElementById(`edit-url-${qrId}`).value.trim();
 
     if (!nuevaUrl) {
-        alert("Por favor, ingresa una URL válida.");
+        mostrarToast("⚠️ Ingresa una URL válida", "warning");
         return;
     }
 
@@ -88,13 +123,13 @@ async function editarQR(qrId) {
         });
 
         if (response.ok) {
-            alert("QR actualizado correctamente");
-            window.location.reload(); // Recargar la página para ver el cambio
+            mostrarToast("✅ QR actualizado correctamente", "success");
+            setTimeout(() => window.location.reload(), 1000);
         } else {
-            alert("Error al actualizar el QR");
+            mostrarToast("❌ Error al actualizar el QR", "error");
         }
     } catch (error) {
         console.error("❌ Error:", error);
-        alert("Error al actualizar el QR.");
+        mostrarToast("⚠️ Error al actualizar el QR", "error");
     }
 }
