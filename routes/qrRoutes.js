@@ -1,12 +1,20 @@
 import express from "express";
 import QRCode from "qrcode";
 import QR from "../models/qrModel.js";
+import { body, validationResult } from "express-validator";
 
 const router = express.Router();
 
 //Crear QR (POST)
-router.post("/create", async (req, res) => {
-    
+router.post("/create", [
+    body("url").isURL().withMessage("Debe ser una URL válida"),
+    body("tag").isString().notEmpty().withMessage("El tag es obligatorio"),
+], async (req, res) => {
+    const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+        
     const url = req.body.url || req.query.url;
     const tag = req.body.tag || req.query.tag;
 

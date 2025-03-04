@@ -7,6 +7,8 @@ import path from "path";
 import { fileURLToPath } from "url";
 import qrRoutes from "./routes/qrRoutes.js";
 import QR from "./models/qrModel.js"
+import session from "express-session";
+import authRoutes from "./routes/authRoutes.js";
 
 
 dotenv.config();
@@ -20,6 +22,22 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cors());
+
+// Configurar sesiones seguras
+app.use(session({
+    secret: process.env.SESSION_SECRET || "clave_secreta",
+    resave: false,
+    saveUninitialized: false,
+    cookie: { httpOnly: true, secure: false } // Cambiar `secure: true` en producción con HTTPS
+}));
+
+// Middleware de autenticación para proteger el frontend
+const requireAuth = (req, res, next) => {
+    if (!req.session.user) {
+        return res.redirect("/auth/login");
+    }
+    next();
+};
 
 //configuración handlebars
 //handlebars
@@ -36,9 +54,10 @@ mongoose
 
 //Rutas
 app.use("/qr", qrRoutes);
+app.use("/auth", authRoutes);
 
 //Pagina principal con lista de QR
-app.get("/", async (req, res) => {
+app.get("/", requireAuth, async (req, res) => {
     try {
         const qrs = await QR.find().lean(); 
         res.render("home", { qrs }); // Enviar los QR a la vista
