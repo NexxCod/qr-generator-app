@@ -114,6 +114,7 @@ router.get("/scan/:id", async (req, res) => {
   
       // Incrementar el contador de escaneos
       qr.scans += 1;
+      qr.clicks.push({timestamp: new Date()})
       await qr.save();
   
       // Redirigir al usuario a la URL final
@@ -122,8 +123,64 @@ router.get("/scan/:id", async (req, res) => {
       res.status(500).json({ error: "Error al registrar escaneo" });
     }
   });
-  
 
+  //Vista track de clicks
+  
+router.get("/track", async (req, res) => {
+    try {
+        const qrs = await QR.find().lean(); // Convertir a objeto plano para Handlebars
+        res.render("track", { qrs });
+    } catch (error) {
+        console.error("❌ Error al cargar los datos de tracking:", error);
+        res.status(500).send("Error al cargar los datos de tracking");
+    }
+});
+
+//Clicks por día / mes / tag
+
+router.get("/clicks-data", async (req, res) => {
+    try {
+        const { tag, month, year } = req.query;
+
+        if (!tag || !month || !year) {
+            return res.status(400).json({ error: "Se requiere un QR, mes y año." });
+        }
+
+        const qr = await QR.findOne({ tag });
+        if (!qr) return res.status(404).json({ error: "QR no encontrado." });
+
+        const startDate = new Date(year, month - 1, 1);
+        const endDate = new Date(year, month, 0);
+
+        // Filtrar clics por fecha
+        const clicksData = qr.clicks.filter(click =>
+            new Date(click.timestamp) >= startDate && new Date(click.timestamp) < endDate
+        );
+
+        console.log("📊 Clics filtrados:", clicksData);
+
+        // Agrupar clics por día
+        const clicksByDay = {};
+        clicksData.forEach(click => {
+            const day = new Date(click.timestamp).getDate();
+            clicksByDay[day] = (clicksByDay[day] || 0) + 1;
+        });
+
+        const clicksByDayArray = Object.keys(clicksByDay).map(day => ({
+            _id: parseInt(day),
+            count: clicksByDay[day]
+        }));
+
+        res.json({
+            clicksByDay: clicksByDayArray,
+            clicksList: clicksData
+        });
+
+    } catch (error) {
+        console.error("❌ Error al obtener datos de clics:", error);
+        res.status(500).json({ error: "Error al obtener datos de clics" });
+    }
+});
 
 
 

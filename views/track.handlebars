@@ -1,0 +1,42 @@
+<h2>Seguimiento de Clics por QR</h2>
+
+<!-- Selector de QR por Tag -->
+<label for="tagSelector">Selecciona un QR:</label>
+<select id="tagSelector" onchange="updateChart()">
+    <option value="">Seleccione un QR</option>
+    {{#each qrs}}
+    <option value="{{this.tag}}">{{this.tag}}</option>
+    {{/each}}
+</select>
+
+<!-- Selector de Año -->
+<label for="yearSelector">Selecciona un año:</label>
+<select id="yearSelector" onchange="updateChart()">
+    <!-- Se llenará dinámicamente en script.js -->
+</select>
+
+<!-- Selector de Mes -->
+<label for="monthSelector">Selecciona un mes:</label>
+<select id="monthSelector" onchange="updateChart()">
+    <!-- Se llenará dinámicamente en script.js -->
+</select>
+
+<!-- Gráfico de Clics -->
+<canvas id="clickChart"></canvas>
+
+<!-- Tabla de Clics por Fecha y Hora -->
+<h3>Detalles de Clics</h3>
+<table border="1">
+    <thead>
+        <tr>
+            <th>Fecha y Hora</th>
+        </tr>
+    </thead>
+    <tbody id="clickDetails">
+        <!-- Se llenará dinámicamente en script.js -->
+    </tbody>
+</table>
+
+<!-- Incluir Chart.js y script.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="/track.js"></script>
