@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    function updateChart() {
+    window.updateChart = function() {
         const selectedTag = tagSelector.value;
         const selectedYear = yearSelector.value;
         const selectedMonth = monthSelector.value;

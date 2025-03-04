@@ -2,7 +2,7 @@
 
 <!-- Selector de QR por Tag -->
 <label for="tagSelector">Selecciona un QR:</label>
-<select id="tagSelector" onchange="updateChart()">
+<select id="tagSelector">
     <option value="">Seleccione un QR</option>
     {{#each qrs}}
     <option value="{{this.tag}}">{{this.tag}}</option>
@@ -11,13 +11,13 @@
 
 <!-- Selector de Año -->
 <label for="yearSelector">Selecciona un año:</label>
-<select id="yearSelector" onchange="updateChart()">
+<select id="yearSelector">
     <!-- Se llenará dinámicamente en script.js -->
 </select>
 
 <!-- Selector de Mes -->
 <label for="monthSelector">Selecciona un mes:</label>
-<select id="monthSelector" onchange="updateChart()">
+<select id="monthSelector">
     <!-- Se llenará dinámicamente en script.js -->
 </select>
 
@@ -40,3 +40,4 @@
 <!-- Incluir Chart.js y script.js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="/track.js"></script>
+<!-- Llamar a updateChart() después de que se cargue el script -->

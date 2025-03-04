@@ -41,7 +41,16 @@ const requireAuth = (req, res, next) => {
 
 //configuración handlebars
 //handlebars
-app.engine("handlebars", engine());
+app.engine("handlebars", engine({
+    extname: ".handlebars",
+    defaultLayout: "main",
+    helpers: {
+        section: function(name, options) {
+            if (!this._sections) this._sections = {};
+            this._sections[name] = options.fn(this);
+            return null;
+        }}
+}));
 app.set("view engine", "handlebars");
 // app.set("views", path.join(__dirname, "/views"));
 app.set("views", "./views")
