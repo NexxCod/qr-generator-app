@@ -6,13 +6,16 @@ const router = express.Router();
 
 //Crear QR (POST)
 router.post("/create", async (req, res) => {
-    const url = req.body.url || req.query.url; // Acepta URL desde formulario y Postman
-    if (!url) return res.status(400).json({ error: "Falta la URL" });
+    
+    const url = req.body.url || req.query.url;
+    const tag = req.body.tag || req.query.tag;
+
+    if (!url || !tag) return res.status(400).json({ error: "Falta la URL o el nombre del QR" });
 
     try {
 
         const baseUrl = `${req.protocol}://${req.get("host")}`;
-        const newQR = new QR({ url });
+        const newQR = new QR({ url, tag });
         await newQR.save();
 
         const trackingUrl = `${baseUrl}/qr/scan/${newQR._id}`;
@@ -24,11 +27,12 @@ router.post("/create", async (req, res) => {
         await newQR.save();
 
         // 🔹 Responder con JSON solo si la solicitud vino con query param
-        if (req.query.url) {
+        if (req.query) {
             return res.status(201).json({
                 message: "QR generado exitosamente",
                 id: newQR._id,
                 url: newQR.url,
+                tag: newQR.tag,
                 qrCode: newQR.qrCode
             });
         }

@@ -4,10 +4,11 @@ document.addEventListener("DOMContentLoaded", () => {
     qrForm.addEventListener("submit", async (event) => {
         event.preventDefault(); // Evita la navegación predeterminada del formulario
 
-        const urlInput = document.getElementById("urlInput").value;
+        const tagInput = document.getElementById("tagInput").value.trim();
+        const urlInput = document.getElementById("urlInput").value.trim();
 
-        if (!urlInput) {
-            alert("Por favor, ingresa una URL válida.");
+        if (!tagInput || !urlInput) {
+            alert("Por favor, ingresa un nombre y una URL válida.");
             return;
         }
 
@@ -15,10 +16,11 @@ document.addEventListener("DOMContentLoaded", () => {
             const response = await fetch("/qr/create", {
                 method: "POST",
                 headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                body: new URLSearchParams({ url: urlInput })
+                body: new URLSearchParams({ tag: tagInput, url: urlInput })
             });
 
             if (response.ok) {
+                document.getElementById("tagInput").value = "";
                 document.getElementById("urlInput").value = ""; // Limpia el input
                 window.location.href = "/"; // Redirige a la página principal manualmente
             } else {

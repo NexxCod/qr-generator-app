@@ -4,7 +4,8 @@ const qrSchema = new mongoose.Schema(
     {
         url: {type: String, requiered: true},
         qrCode: {type: String, requiered: true},
-        scans: {type: Number, default: 0}
+        scans: {type: Number, default: 0},
+        tag: { type: String, required: true}
     }
 );
 
