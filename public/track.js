@@ -28,24 +28,33 @@ document.addEventListener("DOMContentLoaded", () => {
         type: "line",
         data: {
             labels: [],
-            datasets: [{
-                label: "Clics por día",
-                data: [],
-                borderColor: "blue",
-                borderWidth: 2,
-                fill: false
-            }]
+            datasets: [
+                {
+                    label: "Escaneos por día",
+                    data: [],
+                    borderColor: "blue",
+                    borderWidth: 2,
+                    fill: false
+                },
+                {
+                    label: "Confirmaciones por día",
+                    data: [],
+                    borderColor: "red", // Color de la nueva línea
+                    borderWidth: 2,
+                    fill: false
+                }
+            ]
         },
         options: {
             responsive: true,
             scales: {
                 x: { title: { display: true, text: "Día del mes" } },
-                y: { title: { display: true, text: "Cantidad de clics" }, beginAtZero: true }
+                y: { title: { display: true, text: "Cantidad" }, beginAtZero: true }
             }
         }
     });
 
-    window.updateChart = function() {
+    window.updateChart = function () {
         const selectedTag = tagSelector.value;
         const selectedYear = yearSelector.value;
         const selectedMonth = monthSelector.value;
@@ -65,33 +74,32 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 // Actualizar el gráfico
                 const labels = data.clicksByDay.map(item => item._id);
-                const values = data.clicksByDay.map(item => item.count);
+                const valuesEscaneos = data.clicksByDay.map(item => item.count);
+                const valuesAgendamientos = data.agendamientosByDay.map(item => item.count);
 
                 clickChart.data.labels = labels;
-                clickChart.data.datasets[0].data = values;
+                clickChart.data.datasets[0].data = valuesEscaneos;
+                clickChart.data.datasets[1].data = valuesAgendamientos;
                 clickChart.update();
 
-                // Actualizar la tabla de detalles
+                // Actualizar tabla de clics
                 clickDetails.innerHTML = "";
-                if (data.clicksList.length === 0) {
-                    clickDetails.innerHTML = "<tr><td>No hay clics registrados para este QR en este mes.</td></tr>";
-                } else {
-                    data.clicksList.forEach(click => {
-                        const row = document.createElement("tr");
-                        const date = new Date(click.timestamp).toLocaleString("es-ES", {
-                            year: "numeric",
-                            month: "long",
-                            day: "numeric",
-                            hour: "2-digit",
-                            minute: "2-digit",
-                            second: "2-digit"
-                        });
-                        row.innerHTML = `<td>${date}</td>`;
-                        clickDetails.appendChild(row);
-                    });
-                }
+                data.clicksList.forEach(click => {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `<td>${new Date(click.timestamp).toLocaleString()}</td>`;
+                    clickDetails.appendChild(row);
+                });
+
+                // Actualizar tabla de agendamientos
+                agendamientoDetails.innerHTML = "";
+                data.agendamientosList.forEach(agendamiento => {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `<td>${new Date(agendamiento).toLocaleString()}</td>`;
+                    agendamientoDetails.appendChild(row);
+                });
             })
             .catch(error => console.error("❌ Error al cargar datos:", error));
+    
     }
 
     tagSelector.addEventListener("change", updateChart);

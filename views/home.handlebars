@@ -28,6 +28,7 @@
         <div id="qr-{{this._id}}">{{{this.qrCode}}}</div> <!-- Mostrar el QR -->
         <p><strong>URL:</strong> <br><a href="{{this.url}}" target="_blank">{{this.url}}</a></p>
         <p><strong>Escaneos:</strong> {{this.scans}}</p>
+        <p><strong>Confirmados:</strong> {{this.agendados}}</p>
 
         <input type="text" id="edit-url-{{this._id}}" placeholder="Nueva URL" class="input-newurl"> <!-- Formulario para editar la URL -->
         <button onclick="editarQR('{{this._id}}')" class="btn-update">Actualizar</button>

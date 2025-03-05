@@ -186,8 +186,10 @@ router.get("/clicks-data", async (req, res) => {
         const clicksData = qr.clicks.filter(click =>
             new Date(click.timestamp) >= startDate && new Date(click.timestamp) < endDate
         );
-
-        console.log("📊 Clics filtrados:", clicksData);
+        // Filtrar agendamientos por fecha
+        const agendamientosData = qr.fechasAgendamiento.filter(fecha =>
+            new Date(fecha) >= startDate && new Date(fecha) < endDate
+        );
 
         // Agrupar clics por día
         const clicksByDay = {};
@@ -196,14 +198,28 @@ router.get("/clicks-data", async (req, res) => {
             clicksByDay[day] = (clicksByDay[day] || 0) + 1;
         });
 
+        // Agrupar agendamientos por día
+        const agendamientosByDay = {};
+        agendamientosData.forEach(fecha => {
+            const day = new Date(fecha).getDate();
+            agendamientosByDay[day] = (agendamientosByDay[day] || 0) + 1;
+        });
+
         const clicksByDayArray = Object.keys(clicksByDay).map(day => ({
             _id: parseInt(day),
             count: clicksByDay[day]
         }));
 
+        const agendamientosByDayArray = Object.keys(agendamientosByDay).map(day => ({
+            _id: parseInt(day),
+            count: agendamientosByDay[day]
+        }));
+
         res.json({
             clicksByDay: clicksByDayArray,
-            clicksList: clicksData
+            agendamientosByDay: agendamientosByDayArray,
+            clicksList: clicksData,
+            agendamientosList: agendamientosData
         });
 
     } catch (error) {

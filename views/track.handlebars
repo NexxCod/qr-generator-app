@@ -1,46 +1,66 @@
 {{#section "styles"}}
-    <link rel="stylesheet" href="/css/track.css">
+<link rel="stylesheet" href="/css/track.css">
 {{/section}}
 
 <div class="container-track">
-<h2>Seguimiento de Clics por QR</h2>
+    <h2>Seguimiento de Clics por QR</h2>
 
-<!-- Selector de QR por Tag -->
-<label for="tagSelector">Selecciona un QR:</label>
-<select id="tagSelector">
-    <option value="">Seleccione un QR</option>
-    {{#each qrs}}
-    <option value="{{this.tag}}">{{this.tag}}</option>
-    {{/each}}
-</select>
+    <!-- Selector de QR por Tag -->
+    <label for="tagSelector">Selecciona un QR:</label>
+    <select id="tagSelector">
+        <option value="">Seleccione un QR</option>
+        {{#each qrs}}
+        <option value="{{this.tag}}">{{this.tag}}</option>
+        {{/each}}
+    </select>
 
-<!-- Selector de Año -->
-<label for="yearSelector">Selecciona un año:</label>
-<select id="yearSelector">
-    <!-- Se llenará dinámicamente en script.js -->
-</select>
-
-<!-- Selector de Mes -->
-<label for="monthSelector">Selecciona un mes:</label>
-<select id="monthSelector">
-    <!-- Se llenará dinámicamente en script.js -->
-</select>
-
-<!-- Gráfico de Clics -->
-<canvas id="clickChart"></canvas>
-
-<!-- Tabla de Clics por Fecha y Hora -->
-<h3>Detalles de Clics</h3>
-<table>
-    <thead>
-        <tr>
-            <th>Fecha y Hora</th>
-        </tr>
-    </thead>
-    <tbody id="clickDetails">
+    <!-- Selector de Año -->
+    <label for="yearSelector">Selecciona un año:</label>
+    <select id="yearSelector">
         <!-- Se llenará dinámicamente en script.js -->
-    </tbody>
-</table>
+    </select>
+
+    <!-- Selector de Mes -->
+    <label for="monthSelector">Selecciona un mes:</label>
+    <select id="monthSelector">
+        <!-- Se llenará dinámicamente en script.js -->
+    </select>
+
+    <!-- Gráfico de Clics -->
+    <canvas id="clickChart"></canvas>
+
+    <!-- Tabla de Clics por Fecha y Hora -->
+    <div class="tables-container">
+        <!-- Tabla de Clics por Fecha y Hora -->
+        <div class="table-container">
+            <h3>Detalles de Escaneos</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Fecha y Hora</th>
+                    </tr>
+                </thead>
+                <tbody id="clickDetails">
+                    <!-- Se llenará dinámicamente en script.js -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Tabla de Agendamientos por Fecha y Hora -->
+        <div class="table-container">
+            <h3>Detalles de Confirmaciones</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Fecha y Hora</th>
+                    </tr>
+                </thead>
+                <tbody id="agendamientoDetails">
+                    <!-- Se llenará dinámicamente en script.js -->
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
 <!-- Incluir Chart.js y script.js -->
