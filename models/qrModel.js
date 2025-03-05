@@ -6,7 +6,9 @@ const qrSchema = new mongoose.Schema(
         qrCode: {type: String, requiered: true},
         scans: {type: Number, default: 0},
         tag: { type: String, required: true},
-        clicks: [{ timestamp: {type: Date, default: Date.now} }]
+        clicks: [{ timestamp: {type: Date, default: Date.now} }],
+        agendados : {type: Number, default: 0},
+        fechasAgendamiento: [{type: Date}]
     }
 );
 

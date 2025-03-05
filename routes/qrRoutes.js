@@ -2,8 +2,10 @@ import express from "express";
 import QRCode from "qrcode";
 import QR from "../models/qrModel.js";
 import { body, validationResult } from "express-validator";
+import cookieParser from "cookie-parser";
 
 const router = express.Router();
+router.use(cookieParser());
 
 //Crear QR (POST)
 router.post("/create", [
@@ -11,10 +13,10 @@ router.post("/create", [
     body("tag").isString().notEmpty().withMessage("El tag es obligatorio"),
 ], async (req, res) => {
     const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() });
-        }
-        
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
     const url = req.body.url || req.query.url;
     const tag = req.body.tag || req.query.tag;
 
@@ -46,7 +48,7 @@ router.post("/create", [
         }
 
         // 🔹 Si la solicitud vino del formulario (req.body), responder sin JSON y recargar la página
-        res.status(200).send(""); 
+        res.status(200).send("");
 
     } catch (error) {
         res.status(500).json({ error: "Error al generar QR" })
@@ -117,23 +119,43 @@ router.put("/edit", async (req, res) => {
 
 router.get("/scan/:id", async (req, res) => {
     try {
-      const qr = await QR.findById(req.params.id);
-      if (!qr) return res.status(404).json({ error: "QR no encontrado" });
-  
-      // Incrementar el contador de escaneos
-      qr.scans += 1;
-      qr.clicks.push({timestamp: new Date()})
-      await qr.save();
-  
-      // Redirigir al usuario a la URL final
-      res.redirect(qr.url);
-    } catch (error) {
-      res.status(500).json({ error: "Error al registrar escaneo" });
-    }
-  });
+        const ahora = new Date();
 
-  //Vista track de clicks
-  
+        // Buscar el QR y ordenar por último click
+        const qr = await QR.findById(req.params.id).sort({ "clicks.timestamp": -1 });
+
+        if (!qr) {
+            return res.status(404).json({ error: "QR no encontrado" });
+        }
+
+        // Obtener el último escaneo registrado
+        const ultimoEscaneo = qr.clicks.length > 0 ? new Date(qr.clicks[qr.clicks.length - 1].timestamp).getTime() : null;
+        const ahoraMS = ahora.getTime(); // Convertir a milisegundos
+
+        // Validar que el último escaneo fue hace más de 3 segundos
+        if (ultimoEscaneo && (ahoraMS - ultimoEscaneo) <= 3000) {
+
+            return res.redirect(qr.url); // No actualiza, pero redirige
+        }
+
+        // ✅ Si pasó más de 3 segundos, registrar el escaneo
+        qr.scans += 1;
+        qr.clicks.push({ timestamp: ahora });
+        await qr.save();
+
+        // Registrar cookie con vigencia de 1 día
+        res.cookie("qr_ref", qr._id, { maxAge: 24 * 60 * 60 * 1000, httpOnly: true, secure: false });
+
+        // Redirigir al usuario a la URL final
+        res.redirect(qr.url);
+    } catch (error) {
+        console.error("❌ Error en /scan/:id:", error);
+        res.status(500).json({ error: "Error al registrar escaneo" });
+    }
+});
+
+//Vista track de clicks
+
 router.get("/track", async (req, res) => {
     try {
         const qrs = await QR.find().lean(); // Convertir a objeto plano para Handlebars
@@ -187,6 +209,37 @@ router.get("/clicks-data", async (req, res) => {
     } catch (error) {
         console.error("❌ Error al obtener datos de clics:", error);
         res.status(500).json({ error: "Error al obtener datos de clics" });
+    }
+});
+
+//Confirmar recepción cookie
+router.post("/confirm", async (req, res) => {
+    try {
+        const qrId = req.cookies.qr_ref; // Obtener el ID del QR desde la cookie
+
+        // 🔹 Si la cookie no existe, devolver un mensaje adecuado
+        if (!qrId) {
+            return res.status(400).json({ message: "No hay QR registrado. No se realizó ninguna actualización." });
+        }
+
+        const qr = await QR.findById(qrId);
+        if (!qr) {
+            return res.status(404).json({ message: "El QR asociado no fue encontrado. No se realizó ninguna actualización." });
+        }
+
+        // ✅ Incrementar el contador de agendados y agregar la fecha actual
+        qr.agendados += 1;
+        qr.fechasAgendamiento.push(new Date());
+        await qr.save();
+
+        // ✅ Eliminar la cookie después de procesarla
+        res.clearCookie("qr_ref");
+
+        res.json({ message: "✅ Agendamiento confirmado y QR actualizado correctamente.", qrId });
+
+    } catch (error) {
+        console.error("❌ Error al confirmar agendamiento:", error);
+        res.status(500).json({ message: "Error al confirmar agendamiento." });
     }
 });
 
