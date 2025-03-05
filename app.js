@@ -28,7 +28,7 @@ app.use(session({
     secret: process.env.SESSION_SECRET || "clave_secreta",
     resave: false,
     saveUninitialized: false,
-    cookie: { httpOnly: true, secure: true } // Cambiar `secure: true` en producción con HTTPS
+    cookie: { httpOnly: true, secure: false } // Cambiar `secure: true` en producción con HTTPS
 }));
 
 // Middleware de autenticación para proteger el frontend
