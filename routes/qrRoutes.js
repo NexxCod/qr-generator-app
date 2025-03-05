@@ -144,7 +144,7 @@ router.get("/scan/:id", async (req, res) => {
         await qr.save();
 
         // Registrar cookie con vigencia de 1 día
-        res.cookie("qr_ref", qr._id, { maxAge: 24 * 60 * 60 * 1000, httpOnly: true, secure: false });
+        res.cookie("qr_ref", qr._id, { maxAge: 24 * 60 * 60 * 1000, httpOnly: true, secure: true });
 
         // Redirigir al usuario a la URL final
         res.redirect(qr.url);
