@@ -76,6 +76,10 @@ app.get("/", requireAuth, async (req, res) => {
     }
 });
 
+app.get("/confirm", (req, res) => {
+    res.render("confirm", { layout: "confirm"});
+});
+
 // Archivos estáticos
 app.use(express.static(path.join(__dirname, "public")));
 

@@ -1,0 +1,135 @@
+/* ======= ESTILOS GENERALES ======= */
+html, body {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #499FFD;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    text-align: center;
+}
+
+main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centrar el contenido */
+    align-items: center;
+}
+
+/* ======= HEADER ======= */
+.header {
+    background-color: #fff;
+    padding: 15px 0;
+    border-bottom: 1px solid #ddd;
+    width: 100%;
+}
+
+.nav-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.logo {
+    height: 100px; /* Ajustar según el tamaño del logo */
+}
+
+.nav-menu {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    gap: 20px;
+}
+
+.nav-menu li a {
+    text-decoration: none;
+    color: #007bff;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.nav-menu li a:hover {
+    color: #0056b3;
+}
+
+.btn-contacto {
+    background: #007bff;
+    color: white !important;
+    padding: 8px 15px;
+    border-radius: 6px;
+    text-decoration: none;
+}
+
+.btn-contacto:hover {
+    background: #0056b3;
+}
+
+/* ======= CONTENIDO PRINCIPAL ======= */
+.container-confirm {
+    flex: 1;
+    max-width: 600px;
+    margin: 50px auto;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    color: #28a745;
+    font-size: 24px;
+}
+
+p {
+    font-size: 16px;
+    color: #333;
+}
+
+.btn-whatsapp {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #25D366;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.btn-whatsapp:hover {
+    background-color: #1EBE5D;
+}
+
+/* ======= FOOTER ======= */
+.footer {
+    background-color: #FFD700;
+    padding: 20px;
+    color: #007BFF;
+    text-align: center;
+    margin-top: auto;
+    width: 100%;
+    position: relative;
+}
+
+.footer-content p {
+    margin: 5px 0;
+}
+
+.footer-content a {
+    color: #007BFF;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.footer-content a:hover {
+    text-decoration: underline;
+}
