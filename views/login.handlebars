@@ -1,6 +1,15 @@
+
+
+{{#section "styles"}}
+    <link rel="stylesheet" href="/css/login.css">
+{{/section}}
+
+<h1>Acceso a Gestor de QR</h1>
+
+<div class="container-login">
 {{#if user}}
     <p>Ya has iniciado sesión como {{user.username}}</p>
-    <a href="/auth/logout">Cerrar sesión</a>
+    <a href="/auth/logout" class="btn-logout">Cerrar sesión</a>
 {{else}}
     <h2>Iniciar Sesión</h2>
 
@@ -14,3 +23,5 @@
         <button type="submit">Ingresar</button>
     </form>
 {{/if}}
+
+</div>

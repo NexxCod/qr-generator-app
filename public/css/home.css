@@ -24,7 +24,7 @@ body {
 /* ======= ENCABEZADOS ======= */
 h1 {
     text-align: center;
-    background-color: #174f51;
+    background-color: #000c5b;
     color: white;
     padding: 20px;
     font-size: 26px;
@@ -161,6 +161,7 @@ h2 {
     cursor: pointer;
     transition: all 0.3s ease;
     font-weight: 600;
+    border: none;
 }
 
 .btn-update {

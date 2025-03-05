@@ -1,0 +1,115 @@
+/* Fuente moderna y limpia */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+/* ======= ESTILOS GENERALES ======= */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    text-align: center;
+}
+
+/* ======= CONTENEDOR PRINCIPAL ======= */
+.container-login {
+    max-width: 400px;
+    margin: 40px auto;
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* ======= ENCABEZADOS ======= */
+
+h1 {
+    text-align: center;
+    background-color: #000c5b;
+    color: white;
+    padding: 20px;
+    font-size: 26px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+h2 {
+    text-align: center;
+    font-size: 22px;
+    margin-top: 0;
+    color: #333;
+}
+
+/* ======= FORMULARIO DE LOGIN ======= */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Espacio entre los elementos del formulario */
+}
+
+form input {
+    width: 90%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+form input:focus {
+    border-color: #007bff;
+    box-shadow: 0px 0px 5px rgba(0, 123, 255, 0.3);
+}
+
+/* ======= BOTÓN DE INGRESAR ======= */
+form button {
+    background: #007bff; /* Azul */
+    color: white;
+    border: none;
+    padding: 12px 18px;
+    font-size: 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    box-shadow: 2px 2px 10px rgba(0, 123, 255, 0.2);
+    margin-top: 10px; /* Espacio superior */
+}
+
+form button:hover {
+    background: #0056b3; /* Azul más oscuro al pasar el mouse */
+    box-shadow: 2px 2px 15px rgba(0, 123, 255, 0.4);
+}
+
+/* ======= MENSAJE DE ERROR ======= */
+p[style="color: red;"] {
+    background-color: #ffebee;
+    color: #dc3545;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #dc3545;
+    margin-bottom: 15px;
+}
+
+/* ======= ENLACES ======= */
+a {
+    color: #007bff;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    display: inline-block;
+    margin: 10px 0;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+/* ======= MENSAJE DE USUARIO YA LOGUEADO ======= */
+p {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 15px;
+}

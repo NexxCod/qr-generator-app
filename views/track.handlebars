@@ -1,3 +1,8 @@
+{{#section "styles"}}
+    <link rel="stylesheet" href="/css/track.css">
+{{/section}}
+
+<div class="container-track">
 <h2>Seguimiento de Clics por QR</h2>
 
 <!-- Selector de QR por Tag -->
@@ -26,7 +31,7 @@
 
 <!-- Tabla de Clics por Fecha y Hora -->
 <h3>Detalles de Clics</h3>
-<table border="1">
+<table>
     <thead>
         <tr>
             <th>Fecha y Hora</th>
@@ -36,6 +41,7 @@
         <!-- Se llenará dinámicamente en script.js -->
     </tbody>
 </table>
+</div>
 
 <!-- Incluir Chart.js y script.js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

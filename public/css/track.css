@@ -1,0 +1,130 @@
+/* Fuente moderna y limpia */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+/* ======= ESTILOS GENERALES ======= */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    text-align: center;
+}
+
+/* ======= CONTENEDOR PRINCIPAL ======= */
+.container-track {
+    max-width: 90%;
+    margin: 40px auto;
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* ======= ENCABEZADOS ======= */
+h2 {
+    text-align: center;
+    font-size: 22px;
+    margin-top: 0;
+    color: #333;
+}
+
+h3 {
+    font-size: 18px;
+    margin-top: 20px;
+    color: #333;
+}
+
+/* ======= SELECTORES ======= */
+label {
+    display: block;
+    margin: 15px 0 5px;
+    font-size: 16px;
+    color: #333;
+}
+
+select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+    outline: none;
+    transition: all 0.3s ease;
+    margin-bottom: 15px;
+}
+
+select:focus {
+    border-color: #007bff;
+    box-shadow: 0px 0px 5px rgba(0, 123, 255, 0.3);
+}
+
+/* ======= GRÁFICO ======= */
+#clickChart {
+    max-width: 100%;
+ 
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* ======= TABLA DE CLICS ======= */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #174f51;
+    color: white;
+    font-weight: 600;
+}
+
+tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* ======= BOTONES ======= */
+button {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    box-shadow: 2px 2px 10px rgba(0, 123, 255, 0.2);
+    margin: 5px;
+}
+
+button:hover {
+    background: #0056b3;
+    box-shadow: 2px 2px 15px rgba(0, 123, 255, 0.4);
+}
+
+/* ======= MEDIA QUERIES PARA PANTALLAS PEQUEÑAS ======= */
+@media (max-width: 600px) {
+    .container-track {
+        padding: 15px;
+    }
+
+    select {
+        font-size: 14px;
+    }
+
+    table {
+        font-size: 14px;
+    }
+}
